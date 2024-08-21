@@ -13,7 +13,7 @@ const App = () => {
          
         </Routes>
       </main>
-      {/* <Section/> */}
+      <Section/>
       <Footer />
     </BrowserRouter>
   )
