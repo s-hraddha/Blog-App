@@ -19,65 +19,63 @@ app.use(express.json({ limit: "50mb" }));
 // Sign Up
 app.post('/signup', async (req, res) => {
     try {
-      const { username, email, password, phoneNumber } = req.body;
-  
-      const existingUser = await User.findOne({ email });
-      if (existingUser) {
-        return res.status(400).json({ message: 'User already exists' });
-      }
-  
-      const hashedPassword = await bcrypt.hash(password, 10);
-  
-      const user = new User({
-        username,
-        email,
-        password: hashedPassword,
-        phoneNumber
-      });
-  
-      await user.save();
-  
-      res.status(201).json({ message: 'User created successfully' });
+        const { username, email, password, phoneNumber } = req.body;
+
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ message: 'User already exists' });
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const user = new User({
+            username,
+            email,
+            password: hashedPassword,
+            phoneNumber
+        });
+
+        await user.save();
+
+        res.status(201).json({ message: 'User created successfully' });
     } catch (error) {
-      res.status(500).json({ message: error.message });
+        res.status(500).json({ message: error.message });
     }
-  });
-  
-  // Sign In 
-  app.post('/signin', async (req, res) => {
+});
+
+// Sign In 
+app.post('/signin', async (req, res) => {
     try {
-      const { email, password } = req.body;
-  
-      const user = await User.findOne({ email });
-      if (!user) {
-        return res.status(400).json({ message: 'Invalid credentials' });
-      }
-  
-      const isMatch = await bcrypt.compare(password, user.password);
-      if (!isMatch) {
-        return res.status(400).json({ message: 'Invalid credentials' });
-      }
-  
-      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-  
-      res.json({ token });
+        const { email, password } = req.body;
+
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(400).json({ message: 'Invalid credentials' });
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(400).json({ message: 'Invalid credentials' });
+        }
+
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+        res.json({ token });
     } catch (error) {
-      res.status(500).json({ message: error.message });
+        res.status(500).json({ message: error.message });
     }
-  });
+});
 
 //create post  
 app.post("/posts", (req, res) => {
-    const { _id, title, summary, detail, createdAt } = req.body;
-    if (!_id) {
-        return res.status(400).json({ message: "ID is required" });
-    }
     const post = new Post({
-        _id,
-        title,
-        summary,
-        detail,
-        createdAt,
+        _id: new mongoose.Types.ObjectId(),
+        title: req.body.title,
+        summary: req.body.summary,
+        detail: req.body.detail,
+        createdBy: req.body.createdBy,
+        createdAt: req.body.createdAt,
+
     });
 
     post.save()
@@ -122,6 +120,7 @@ app.put('/posts/:id', (req, res) => {
                 title: req.body.title,
                 summary: req.body.summary,
                 detail: req.body.detail,
+                createdBy: req.body.createdBy,
                 createdAt: req.body.createdAt,
             },
         }

@@ -3,19 +3,28 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Navbar from './Component/Navbar/Navbar'
 import Section from './Component/Section/Section'
 import Footer from './Component/Footer/Footer'
+import Front from './pages/Front'
+import Login from './pages/Login'
+import Register from './pages/Register'
+import PostDetails from './pages/PostDetails'
+import CreatePost from './pages/CreatePost'
+
+
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Navbar />
-      <main>
-        <Routes>
-         
-        </Routes>
-      </main>
+    <div>
+      <Navbar/>
       <Section/>
-      <Footer />
-    </BrowserRouter>
+      <Routes>
+       <Route exact path='/' element={<Front/>}/>
+       <Route exact path='/login' element={<Login/>}/>
+       <Route exact path='/register' element={<Register/>}/>
+       <Route exact path='/posts' element={<CreatePost/>}/>
+       <Route exact path='/posts/:id' element={<PostDetails/>}/>
+      </Routes>
+      <Footer/>
+    </div>
   )
 }
 
