@@ -8,6 +8,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import PostDetails from './pages/PostDetails'
 import CreatePost from './pages/CreatePost'
+import EditPost from './pages/EditPost'
 
 
 
@@ -22,6 +23,7 @@ const App = () => {
        <Route exact path='/register' element={<Register/>}/>
        <Route exact path='/posts' element={<CreatePost/>}/>
        <Route exact path='/posts/:id' element={<PostDetails/>}/>
+       <Route exact path='/update/:id' element={<EditPost/>}/>
       </Routes>
       <Footer/>
     </div>

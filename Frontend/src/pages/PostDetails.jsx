@@ -52,8 +52,8 @@ const PostDetails = () => {
                     </div>
                 </div>
                 <div className='flex flex-col mt-4 md:flex-row md:items-center'>
-                 <input type='text' placeholder='Write comment' className=' w-full md:w-[90%] border-2 border-blue-800 outline-0 rounded-md px-4 py-2 mt-2 md:mt-0 md:mr-2'/>
-                 <button className='bg-blue-800 px-4  py-2 text-sm text-white w-full md:w-auto mt-2 md:mt-0'>Add Comment</button>
+                    <input type='text' placeholder='Write comment' className=' w-full md:w-[90%] border-2 border-blue-800 outline-0 rounded-md px-4 py-2 mt-2 md:mt-0 md:mr-2' />
+                    <button className='bg-blue-800 px-4  py-2 text-sm text-white w-full md:w-auto mt-2 md:mt-0'>Add Comment</button>
                 </div>
             </div>
         </div>
