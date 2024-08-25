@@ -1,13 +1,17 @@
 const jwt = require("jsonwebtoken");
-
 const Auth = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader) {
+    return res.status(401).json({ msg: 'No token provided' });
+  }
+
+  const token = authHeader.split(' ')[1];
   try {
-    const token = req.headers.authorization.split(" ")[1];
-    console.log(token);
-    const verify = jwt.verify(token, "Dummy Text for Encryption");
-    console.log(verify);
+    const verified = jwt.verify(token, "dummy text"); 
+    req.user = verified; 
     next();
-  } catch (err) {
+  }
+  catch (err) {
     res.json({ msg: "Invalid Token" });
   }
 };

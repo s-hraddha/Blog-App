@@ -1,26 +1,59 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { BiEdit } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios'
 
 const PostDetails = () => {
+    const postId = useParams().id
+    const [post, setPost] = useState({})
+    const navigate = useNavigate();
+
+    const fetchPost = async () => {
+        try {
+            const res = await axios.get("http://localhost:3000/posts/" + postId)
+            setPost(res.data)
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
+
+    const handleDeletePost=async ()=>{
+
+        try{
+          const res=await axios.delete("http://localhost:3000/posts/"+postId,{withCredentials:true})
+          console.log(res.data)
+          navigate("/")
+    
+        }
+        catch(err){
+          console.log(err)
+        }
+    
+      }
+    useEffect(() => {
+        fetchPost()
+    }, [postId])
+
     return (
         <div>
             <div className='px-8 md:px-[200px] mt-8'>
                 <div className='flex justify-between items-center'>
-                    <h1 className='text-2xl font-bold text-black md:text-3xl'>Uses of Blogging</h1>
+                    <h1 className='text-2xl font-bold text-black md:text-3xl'>{post.title}</h1>
                     <div className='flex items-center justify-center space-x-2'>
-                        <p><BiEdit /></p>
-                        <p><MdDelete /></p>
+                        <p className="cursor-pointer" onClick={()=>navigate("/update/"+postId)} ><BiEdit /></p>
+                        <p className="cursor-pointer" onClick={handleDeletePost}><MdDelete /></p>
                     </div>
                 </div>
                 <div className='flex items-center justify-between mt-2 md:mt-4'>
-                    <p>@anonymous</p>
+                    <p>{post.createdBy}</p>
                     <div className='flex space-x-2'>
-                        <p>20-08-2024</p>
+                        <p>{new Date(post.createdAt).toString().slice(0, 15)}</p>
                     </div>
                 </div>
-                <p className='flex space-x-1 py-3'><h3 className='font-bold'>summary:</h3> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nesciunt corporis facere mollitia, culpa voluptate ullam.</p>
-                <p className='text-justify'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur impedit blanditiis fugiat non unde! Minus doloremque ea aspernatur commodi rem, sit eveniet asperiores voluptatibus illo omnis laboriosam optio maxime deleniti odio dignissimos tempore. Quod corrupti reprehenderit non vel accusamus doloribus error quisquam iure tempore optio porro labore, architecto sint illum, aperiam qui veniam maxime quis sequi. Illum vero ipsam iusto quos nihil velit sed dolore totam molestias hic blanditiis consequuntur cum, enim explicabo soluta fuga natus magnam animi dolorum deserunt! Dolorem iusto nulla reprehenderit eos veniam vero. Repellendus, corporis eligendi.</p>
+                <p className='flex space-x-1 py-3'><span className='font-bold'>summary:</span>{post.summary}</p>
+                <p className='text-justify'>{post.detail}</p>
                 <div className='flex flex-col mt-4'>
                     <h3 className='mt-6 mb-4 font-bold'>Comments</h3>
                     <div className='px-2 py-2 bg-slate-200 rounded-lg my-2'>
@@ -43,8 +76,8 @@ const PostDetails = () => {
                             <div className='flex justify-center items-center space-x-4'>
                                 <p className='text-md'> 21-8-24</p>
                                 <div className='flex items-center justify-center space-x-2'>
-                                    <p><BiEdit /></p>
-                                    <p><MdDelete /></p>
+                                    <p className="cursor-pointer" onClick={()=>navigate("/update/"+postId)} ><BiEdit /></p>
+                                    <p className="cursor-pointer" onClick={handleDeletePost}><MdDelete /></p>
                                 </div>
                             </div>
                         </div>

@@ -1,14 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { BsSearch } from "react-icons/bs";
 
+
 const Navbar = () => {
-    const user = false
+    const user= false
     return (
         <div className='flex justify-between px-3 py-4 border-b-4 items-center'>
             <h1 className='text-lg md:text-xl font-extrabold text-blue-800 mi-2'><Link to="/">Connect Blog</Link></h1>
             <div className='flex justif items-center space-x-0 sm:px-4 ml-8'>
-                <p className=''><BsSearch /></p>
+                <p className='cursor-pointer'><BsSearch /></p>
                 <input className=' outline-none px-1 ' placeholder='search' type='text' />
             </div>
 

@@ -10,22 +10,20 @@ import PostDetails from './pages/PostDetails'
 import CreatePost from './pages/CreatePost'
 import EditPost from './pages/EditPost'
 
-
-
 const App = () => {
   return (
     <div>
-      <Navbar/>
-      <Section/>
+      <Navbar />
+      <Section />
       <Routes>
-       <Route exact path='/' element={<Front/>}/>
-       <Route exact path='/login' element={<Login/>}/>
-       <Route exact path='/register' element={<Register/>}/>
-       <Route exact path='/posts' element={<CreatePost/>}/>
-       <Route exact path='/posts/:id' element={<PostDetails/>}/>
-       <Route exact path='/update/:id' element={<EditPost/>}/>
+        <Route exact path='/' element={<Front />} />
+        <Route exact path='/login' element={<Login />} />
+        <Route exact path='/register' element={<Register />} />
+        <Route exact path='/posts' element={<CreatePost />} />
+        <Route exact path='/posts/:id' element={<PostDetails />} />
+        <Route exact path='/update/:id' element={<EditPost />} />
       </Routes>
-      <Footer/>
+      <Footer />
     </div>
   )
 }
